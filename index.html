@@ -71,7 +71,7 @@
     <br>
     <button onclick="hitung()">Hitung</button>
     
-    <div class="hasil" id="hasilText">—</div>
+    <div class="hasil" id="hasilText">DPP = —</div>
     
     <!-- TAMBAHAN: output 11% dari input (DPP) -->
     <div class="hasil" id="hasil11Persen" style="background:#fef2e0; color:#b45f1b;">11% dari DPP = —</div>
@@ -158,7 +158,7 @@
         // Validasi
         if (isNaN(angka)) {
             document.getElementById('hasilText').innerHTML = '❌ Masukkan angka yang benar!';
-            document.getElementById('hasil11Persen').innerHTML = '11% dari DPP = —';
+            document.getElementById('hasil11Persen').innerHTML = 'PPN = —';
             return;
         }
         
