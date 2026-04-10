@@ -69,14 +69,14 @@
 <div class="container">
     <h2>Kalkulator × PPN 11%</h2>
     
-    <input type="text" id="angkaInput" placeholder="Masukkan DPP 12%..." oninput="formatInputRibuan(this)">
+    <input type="text" id="angkaInput" placeholder="Masukkan DPP . . . " oninput="formatInputRibuan(this)">
     <br>
     <button onclick="hitung()">Hitung</button>
     
-    <div class="hasil" id="hasilText">—</div>
+    <div class="hasil" id="hasilText">DPP</div>
     
     <!-- output 11% dari input (DPP) -->
-    <div class="hasil" id="hasil11Persen" style="background:#fef2e0; color:#b45f1b;">11% dari DPP = —</div>
+    <div class="hasil" id="hasil11Persen" style="background:#fef2e0; color:#b45f1b;">PPN</div>
     
 </div>
 
@@ -160,7 +160,7 @@
         // Validasi
         if (isNaN(angka)) {
             document.getElementById('hasilText').innerHTML = '❌ Masukkan angka yang benar!';
-            document.getElementById('hasil11Persen').innerHTML = '11% dari DPP = —';
+            document.getElementById('hasil11Persen').innerHTML = 'PPN';
             return;
         }
         
@@ -175,8 +175,8 @@
         let hasil11Terformat = formatHasilIndonesia(hasil11Persen, 2);
         
         // Tampilkan
-        document.getElementById('hasilText').innerHTML = `= ${hasilTerformat}`;
-        document.getElementById('hasil11Persen').innerHTML = `11% dari DPP = ${hasil11Terformat}`;
+        document.getElementById('hasilText').innerHTML = `DPP = ${hasilTerformat}`;
+        document.getElementById('hasil11Persen').innerHTML = `PPN = ${hasil11Terformat}`;
     }
 
     // Tekan Enter langsung hitung
