@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kalkulator PPN 11%</title>
+    <!-- Icon/tab favicon pakai emoji kalkulator -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -67,14 +69,14 @@
 <div class="container">
     <h2>Kalkulator × PPN 11%</h2>
     
-    <input type="text" id="angkaInput" placeholder="Masukkan DPP . . ." oninput="formatInputRibuan(this)">
+    <input type="text" id="angkaInput" placeholder="Masukkan DPP 12%..." oninput="formatInputRibuan(this)">
     <br>
     <button onclick="hitung()">Hitung</button>
     
-    <div class="hasil" id="hasilText">DPP</div>
+    <div class="hasil" id="hasilText">—</div>
     
-    <!-- TAMBAHAN: output 11% dari input (DPP) -->
-    <div class="hasil" id="hasil11Persen" style="background:#fef2e0; color:#b45f1b;">PPN</div>
+    <!-- output 11% dari input (DPP) -->
+    <div class="hasil" id="hasil11Persen" style="background:#fef2e0; color:#b45f1b;">11% dari DPP = —</div>
     
 </div>
 
@@ -158,14 +160,14 @@
         // Validasi
         if (isNaN(angka)) {
             document.getElementById('hasilText').innerHTML = '❌ Masukkan angka yang benar!';
-            document.getElementById('hasil11Persen').innerHTML = 'PPN';
+            document.getElementById('hasil11Persen').innerHTML = '11% dari DPP = —';
             return;
         }
         
         // Hitung: angka × (11/12)
         let hasil = angka * (11 / 12);
         
-        // TAMBAHAN: hitung 11% dari input (DPP)
+        // Hitung 11% dari input (DPP)
         let hasil11Persen = angka * 0.11;
         
         // Format hasil ke format Indonesia (titik ribuan + koma desimal)
@@ -173,8 +175,8 @@
         let hasil11Terformat = formatHasilIndonesia(hasil11Persen, 2);
         
         // Tampilkan
-        document.getElementById('hasilText').innerHTML = `DPP = ${hasilTerformat}`;
-        document.getElementById('hasil11Persen').innerHTML = `PPN = ${hasil11Terformat}`;
+        document.getElementById('hasilText').innerHTML = `= ${hasilTerformat}`;
+        document.getElementById('hasil11Persen').innerHTML = `11% dari DPP = ${hasil11Terformat}`;
     }
 
     // Tekan Enter langsung hitung
