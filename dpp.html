@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator PPN 11%</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        input {
+            font-size: 18px;
+            padding: 10px;
+            width: 80%;
+            text-align: right;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: #2c7da0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #1f5e7a;
+        }
+        .hasil {
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #1e3c4c;
+            background: #e9f0f4;
+            padding: 15px;
+            border-radius: 12px;
+        }
+        .label {
+            font-size: 14px;
+            color: gray;
+            margin-top: 15px;
+        }
+        .note {
+            font-size: 12px;
+            color: #888;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kalkulator × PPN 11%</h2>
+    
+    <input type="text" id="angkaInput" placeholder="Contoh: 1000000 atau 1.000.000" oninput="formatInputRibuan(this)">
+    <br>
+    <button onclick="hitung()">Hitung</button>
+    
+    <div class="hasil" id="hasilText">—</div>
+    
+</div>
+
+<script>
+    // Fungsi: bersihkan titik dari string (buat jadi angka murni)
+    function bersihkanTitik(str) {
+        return str.replace(/\./g, '');
+    }
+
+    // Fungsi: format angka dengan titik ribuan (tanpa desimal untuk input)
+    function formatRibuan(angka) {
+        let angkaString = Math.floor(angka).toString();
+        return angkaString.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    // Format input saat diketik (hanya titik ribuan, tidak pakai koma)
+    function formatInputRibuan(inputElement) {
+        let nilai = inputElement.value;
+        
+        // Hapus semua karakter selain digit dan titik
+        let bersih = nilai.replace(/[^0-9.]/g, '');
+        
+        // Hapus semua titik dulu, jadi kumpulan digit
+        let tanpaTitik = bersih.replace(/\./g, '');
+        
+        if (tanpaTitik === '') {
+            inputElement.value = '';
+            return;
+        }
+        
+        // Ubah ke angka bulat (karena input tidak pakai koma desimal)
+        let angka = parseInt(tanpaTitik, 10);
+        if (isNaN(angka)) {
+            inputElement.value = '';
+            return;
+        }
+        
+        // Format dengan titik ribuan
+        let terformat = formatRibuan(angka);
+        inputElement.value = terformat;
+    }
+
+    // Fungsi: parse input (bisa berisi titik ribuan) ke number
+    function parseInputToNumber(str) {
+        if (!str) return NaN;
+        let bersih = str.replace(/\./g, '');
+        return parseFloat(bersih);
+    }
+
+    // Fungsi: format hasil ke format Indonesia (titik ribuan + koma desimal)
+    function formatHasilIndonesia(angka, desimal = 2) {
+        if (isNaN(angka)) return '?';
+        
+        // Bulatkan ke jumlah desimal tertentu
+        let angkaBulat = angka.toFixed(desimal);
+        
+        // Pisahkan bagian bulat dan desimal
+        let parts = angkaBulat.split('.');
+        let bagianBulat = parts[0];
+        let bagianDesimal = parts[1] || '';
+        
+        // Tambah titik ribuan pada bagian bulat
+        bagianBulat = bagianBulat.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        
+        // Gabungkan dengan koma sebagai pemisah desimal
+        if (bagianDesimal) {
+            return bagianBulat + ',' + bagianDesimal;
+        } else {
+            return bagianBulat;
+        }
+    }
+
+    // Fungsi utama hitung
+    function hitung() {
+        let inputElement = document.getElementById('angkaInput');
+        let nilaiInput = inputElement.value;
+        
+        // Parse input ke number (abaikan titik)
+        let angka = parseInputToNumber(nilaiInput);
+        
+        // Validasi
+        if (isNaN(angka)) {
+            document.getElementById('hasilText').innerHTML = '❌ Masukkan angka yang benar!';
+            return;
+        }
+        
+        // Hitung: angka × (11/12)
+        let hasil = angka * (11 / 12);
+        
+        // Format hasil ke format Indonesia (titik ribuan + koma desimal)
+        let hasilTerformat = formatHasilIndonesia(hasil, 2);
+        
+        // Tampilkan
+        document.getElementById('hasilText').innerHTML = `= ${hasilTerformat}`;
+    }
+
+    // Tekan Enter langsung hitung
+    document.getElementById('angkaInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            hitung();
+        }
+    });
+</script>
+
+</body>
+</html>
